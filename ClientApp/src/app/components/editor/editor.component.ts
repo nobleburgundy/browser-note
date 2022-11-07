@@ -10,7 +10,7 @@ export class EditorComponent implements OnInit {
     mode: "text",
     indentWithTabs: true,
     smartIndent: true,
-    lineNumbers: true,
+    lineNumbers: false,
     lineWrapping: false,
     extraKeys: { "Ctrl-Space": "autocomplete" },
     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
