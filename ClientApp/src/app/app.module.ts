@@ -10,7 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { PreferencesComponent } from './preferences/preferences.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EditorComponent } from './components/editor/editor.component'
+import { EditorComponent } from './components/editor/editor.component';
+import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
+import { ThemeSelectorComponent } from './components/theme-selector/theme-selector.component'
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { EditorComponent } from './components/editor/editor.component'
     NavMenuComponent,
     HomeComponent,
     PreferencesComponent,
-    EditorComponent
+    EditorComponent,
+    LanguageSelectorComponent,
+    ThemeSelectorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

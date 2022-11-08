@@ -1,0 +1,8 @@
+<!-- language selection -->
+<div class="input-group {{dropdownLabel ? 'form-floating' : ''}}">
+    <select class="form-select border-0 m-0 form-select-sm" id="languageSelection"
+        aria-label="Select default language setting">
+        <option *ngFor="let language of languages; index as i;">{{language}}</option>
+    </select>
+    <label *ngIf="dropdownLabel" for="languageSelection">{{dropdownLabel}}</label>
+</div>

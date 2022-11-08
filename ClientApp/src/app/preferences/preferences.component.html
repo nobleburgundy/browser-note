@@ -1,5 +1,5 @@
-<h2 class="font-monospace">Preferences</h2>
 <div class="container">
+    <h2 class="font-monospace">Preferences</h2>
     <div class="row">
         <div class="col">
             <div class="form-check">
@@ -24,21 +24,9 @@
 
         <div class="col">
             <!-- language selection -->
-            <div class="input-group form-floating mb-2">
-                <select class="form-select form-select-sm" id="languageSelection"
-                    aria-label="Select default language setting">
-                    <option *ngFor="let language of languages; index as i;">{{language}}</option>
-                </select>
-                <label for="languageSelection">Default editor language mode</label>
-            </div>
+            <app-language-selector [dropdownLabel]="'Default language mode'"></app-language-selector>
             <!-- theme selection -->
-            <div class="input-group form-floating">
-                <select class="form-select form-select-sm" id="themeSelection"
-                    aria-label="Select default language setting">
-                    <option *ngFor="let theme of themes; index as i;">{{theme}}</option>
-                </select>
-                <label for="themeSelection">Theme</label>
-            </div>
+            <app-theme-selector></app-theme-selector>
         </div>
     </div>
 </div>

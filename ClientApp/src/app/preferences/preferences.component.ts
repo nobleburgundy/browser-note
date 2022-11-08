@@ -8,7 +8,6 @@ import { Component, OnInit, VERSION } from '@angular/core';
 export class PreferencesComponent implements OnInit {
   version = 'Angular ' + VERSION.major;
   languages = ['Markdown', 'TypeScript', 'C#', 'JavaScript', 'Java', 'Text']
-  themes = ['Light', 'Dark']
 
   constructor() { }
 

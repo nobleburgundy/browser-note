@@ -1,0 +1,7 @@
+<div class="input-group form-floating">
+    <select class="form-select border-0 form-select-sm" id="themeSelection"
+        aria-label="Select default language setting">
+        <option *ngFor="let theme of themes; index as i;">{{theme}}</option>
+    </select>
+    <label for="themeSelection">Theme</label>
+</div>
