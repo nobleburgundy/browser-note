@@ -1,18 +1,32 @@
 import { Component } from '@angular/core';
-import PouchDb from 'pouchdb';
+import { OfflineStorageServiceService } from './services/offline-storage-service.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  public db: any;
-  title = 'app';
 
-  constructor() {
-    this.db = new PouchDb("testing_pouchdb");
-    this.db.info().then(function (info: any) {
-      console.log("db info:", info);
-    });
+  /**
+   * 
+   * @param offlineStorageService 
+   */
+  constructor(private offlineStorageService: OfflineStorageServiceService) {
+    console.log("app comp ctor");
+    const date = new Date().getUTCMilliseconds.toString();
+    var testDoc = {
+      "_id": date,
+      "name": "Mittens " + date,
+      "occupation": "kitten",
+      "age": 3,
+      "hobbies": [
+        "playing with balls of yarn",
+        "chasing laser pointers",
+        "lookin' hella cute"
+      ]
+    };
+
+    this.offlineStorageService.logDbInfo();
+    this.offlineStorageService.put(testDoc);
   }
 }
