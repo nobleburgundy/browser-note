@@ -16,6 +16,7 @@ public class BrowserNotesController : ControllerBase
     [HttpGet("notes")]
     public IEnumerable<BrowserNote> GetAll()
     {
+        _logger.LogInformation(1, "api/notes GetAll() CALLED");
         return Enumerable.Range(1, 5).Select(index => new BrowserNote
         {
             Date = DateTime.Now.AddDays(index),
