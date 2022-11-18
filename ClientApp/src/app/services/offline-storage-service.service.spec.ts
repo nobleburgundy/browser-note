@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OfflineStorageServiceService } from './offline-storage-service.service';
+import { OfflineStorageService } from './offline-storage-service.service';
 
 describe('OfflineStorageServiceService', () => {
-  let service: OfflineStorageServiceService;
+  let service: OfflineStorageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OfflineStorageServiceService);
+    service = TestBed.inject(OfflineStorageService);
   });
 
   it('should be created', () => {

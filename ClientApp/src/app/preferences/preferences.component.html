@@ -29,6 +29,20 @@
             <app-theme-selector></app-theme-selector>
         </div>
     </div>
+    <!-- Existing Notes -->
+    <div>
+        <button class="btn btn-sm btn-outline-danger float-end" (click)="deleteAllDocs()">Delete All Docs</button>
+        <h3 class="floast-start">Existing Notes</h3>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let note of notes">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{note.title}}</div>
+                    {{note.text}}
+                </div>
+            </li>
+            <hr>
+        </ul>
+    </div>
 </div>
 <footer class="bg-info font-monospace fixed-bottom">
     <p class="p-2 mb-0"><small>{{version}}</small></p>
