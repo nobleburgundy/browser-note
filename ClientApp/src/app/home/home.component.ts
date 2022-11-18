@@ -1,6 +1,6 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 import * as CodeMirror from 'codemirror';
 import { EditorComponent } from '../components/editor/editor.component';
 import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
@@ -22,6 +22,22 @@ export class HomeComponent {
     "text": `Upper roof fix easy - $1500 
     Basement easy refinish - 30k 
     Replace front doors - 10k`,
+    createdDate: new Date()
+  } as BrowserNote;
+
+  private testDocument2 = {
+    "_id": "456",
+    "title": "Job Hunting Notes",
+    "text": `Tyler - Nextera: large renewable energy co. Looking for professional
+    python experience. [MAYBE] 
+    `,
+    createdDate: new Date()
+  } as BrowserNote;
+
+  private testDocument3 = {
+    "_id": "789",
+    "title": "",
+    "text": `provisionphr.com u:jimi_hendo p:blar123 \n new prescription available later today.`,
     createdDate: new Date()
   } as BrowserNote;
 
@@ -55,7 +71,7 @@ export class HomeComponent {
   saveDoc() {
     console.log("saveDoc() called");
 
-    this.offlineStorageService.put(this.testDocument).then((result) => {
+    this.offlineStorageService.put(this.testDocument3).then((result) => {
       console.log("saveDoc result", result);
     });
   }

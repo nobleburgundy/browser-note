@@ -6,5 +6,4 @@ import { OfflineStorageService } from './services/offline-storage-service.servic
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = "Browser Notes";
 }

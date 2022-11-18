@@ -3,21 +3,27 @@
     <div class="row">
         <div class="col">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="showLineNumbersCheckbox" checked>
+                <input class="form-check-input" type="checkbox" value="" id="showLineNumbersCheckbox">
                 <label class="form-check-label" for="showLineNumbersCheckbox">
                     Show line numbers
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="showLineNumbersCheckbox" checked>
-                <label class="form-check-label" for="showLineNumbersCheckbox">
+                <input class="form-check-input" type="checkbox" value="" id="autoSaveCheckbox" checked>
+                <label class="form-check-label" for="autoSaveCheckbox">
                     Autosave
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="showLineNumbersCheckbox" checked>
-                <label class="form-check-label" for="showLineNumbersCheckbox">
+                <input class="form-check-input" type="checkbox" value="" id="zenModeCheckbox" checked>
+                <label class="form-check-label" for="zenModeCheckbox">
                     Zen mode (full page editor)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="showNavBarCheckbox" checked>
+                <label class="form-check-label" for="showNavBarCheckbox">
+                    Show nav bar on editor page
                 </label>
             </div>
         </div>
@@ -31,12 +37,16 @@
     </div>
     <!-- Existing Notes -->
     <div>
-        <button class="btn btn-sm btn-outline-danger float-end" (click)="deleteAllDocs()">Delete All Docs</button>
+        <button class="btn btn-sm btn-outline-danger float-end" (click)="deleteAllDocs()">Delete All Notes</button>
         <h3 class="floast-start">Existing Notes</h3>
         <ul class="list-group">
             <li class="list-group-item" *ngFor="let note of notes">
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">{{note.title}}</div>
+                    <div class="fw-bold">{{note.title}}
+                        <button class="btn btn-sm btn-outline-danger border-0 rounded-pill float-end">
+                            <fa-icon class="" [icon]='faTrash'></fa-icon>
+                        </button>
+                    </div>
                     {{note.text}}
                 </div>
             </li>

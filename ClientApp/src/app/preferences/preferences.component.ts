@@ -1,4 +1,5 @@
 import { Component, OnInit, VERSION } from '@angular/core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
 
 @Component({
@@ -10,6 +11,7 @@ export class PreferencesComponent implements OnInit {
   version = 'Angular ' + VERSION.major;
   languages = ['Markdown', 'TypeScript', 'C#', 'JavaScript', 'Java', 'Text'];
   notes!: Array<BrowserNote>;
+  faTrash = faTrash;
 
   constructor(private offlineStorageService: OfflineStorageService) {
 
