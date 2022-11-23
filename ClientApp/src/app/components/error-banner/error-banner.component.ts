@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./error-banner.component.css']
 })
 export class ErrorBannerComponent implements OnInit {
-  errorMessage: string = 'testing';
+  errorMessage: string = '';
 
   @Output()
   errorMessageEvent = new EventEmitter<string>();

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./theme-selector.component.css']
 })
 export class ThemeSelectorComponent implements OnInit {
-  themes = ['Light', 'Dark']
+  themes = ['Light', 'Dark', 'Solar', 'Retro'];
 
   constructor() { }
 
