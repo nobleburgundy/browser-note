@@ -16,31 +16,6 @@ export class HomeComponent {
   editor!: EditorComponent;
   data = "";
 
-  private testDocument = {
-    "_id": "123",
-    "title": "11172022 Notes",
-    "text": `Upper roof fix easy - $1500 
-    Basement easy refinish - 30k 
-    Replace front doors - 10k`,
-    createdDate: new Date()
-  } as BrowserNote;
-
-  private testDocument2 = {
-    "_id": "456",
-    "title": "Job Hunting Notes",
-    "text": `Tyler - Nextera: large renewable energy co. Looking for professional
-    python experience. [MAYBE] 
-    `,
-    createdDate: new Date()
-  } as BrowserNote;
-
-  private testDocument3 = {
-    "_id": "789",
-    "title": "",
-    "text": `provisionphr.com u:jimi_hendo p:blar123 \n new prescription available later today.`,
-    createdDate: new Date()
-  } as BrowserNote;
-
   constructor(private offlineStorageService: OfflineStorageService) { }
 
   ngOnInit() {
@@ -59,10 +34,10 @@ export class HomeComponent {
     });
   }
 
-  getDoc() {
+  getDoc(note: BrowserNote) {
     console.log("getDoc() called");
 
-    this.offlineStorageService.getById(this.testDocument._id).then((result) => {
+    this.offlineStorageService.getById(note._id).then((result) => {
       this.data = result.text;
       console.log("getDoc result", result);
     });
@@ -71,7 +46,7 @@ export class HomeComponent {
   saveDoc() {
     console.log("saveDoc() called");
 
-    this.offlineStorageService.put(this.testDocument3).then((result) => {
+    this.offlineStorageService.put(this.data).then((result) => {
       console.log("saveDoc result", result);
     });
   }
@@ -79,7 +54,7 @@ export class HomeComponent {
   deleteDoc() {
     console.log("deleteDoc() called");
 
-    this.offlineStorageService.deleteById(this.testDocument._id).then((result) => {
+    this.offlineStorageService.deleteById(this.data).then((result) => {
       console.log("deleteDoc result", result);
     });
   }

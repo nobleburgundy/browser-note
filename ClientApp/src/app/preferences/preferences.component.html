@@ -43,8 +43,9 @@
             <li class="list-group-item" *ngFor="let note of notes">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">{{note.title}}
-                        <button class="btn btn-sm btn-outline-danger border-0 rounded-pill float-end">
-                            <fa-icon class="" [icon]='faTrash'></fa-icon>
+                        <button class="btn btn-sm btn-outline-danger border-0 rounded-pill float-end"
+                            (click)="deleteNote(note)">
+                            <fa-icon [icon]='faTrash'></fa-icon>
                         </button>
                     </div>
                     {{note.text}}

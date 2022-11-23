@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,8 @@ import { PreferencesComponent } from './preferences/preferences.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditorComponent } from './components/editor/editor.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
-import { ThemeSelectorComponent } from './components/theme-selector/theme-selector.component'
+import { ThemeSelectorComponent } from './components/theme-selector/theme-selector.component';
+import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ThemeSelectorComponent } from './components/theme-selector/theme-select
     PreferencesComponent,
     EditorComponent,
     LanguageSelectorComponent,
-    ThemeSelectorComponent
+    ThemeSelectorComponent,
+    ErrorBannerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,6 +38,7 @@ import { ThemeSelectorComponent } from './components/theme-selector/theme-select
     ])
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

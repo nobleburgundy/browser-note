@@ -1,0 +1,5 @@
+<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show m-3" role="alert"
+    (errorMessageEvent)="updateErrorMessage($event)">
+    {{errorMessage}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
