@@ -115,7 +115,7 @@ export class BrowserNote {
   static createFromText(text: string, title?: string): BrowserNote {
     const note = new BrowserNote();
     note._id = new Date().getUTCMilliseconds().toString();
-    note.title = title ?? new Date().getUTCMilliseconds().toString();
+    note.title = title ?? new Date().toDateString();
     note.text = text;
     note.createdDate = new Date();
 

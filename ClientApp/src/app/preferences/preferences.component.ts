@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, VERSION } from '@angular/core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class PreferencesComponent implements OnInit {
   languages = ['Markdown', 'TypeScript', 'C#', 'JavaScript', 'Java', 'Text'];
   notes: Array<BrowserNote> = [];
   faTrash = faTrash;
+  faPencil = faPencil;
 
   @Output()
   errorMessage = new EventEmitter<string>();
@@ -26,7 +27,7 @@ export class PreferencesComponent implements OnInit {
 
   /**
    * Deletes the given note and updates the local cache, which refreshes the page.
-   * @param note 
+   * @param note The note to delete.
    */
   deleteNote(note: BrowserNote) {
     this.offlineStorageService.deleteById(note._id).then((result: any) => {
@@ -43,6 +44,14 @@ export class PreferencesComponent implements OnInit {
   }
 
   /**
+ * Edits the given note and updates the local cache, which refreshes the page.
+ * @param note The note to edit.
+ */
+  editNote(note: BrowserNote) {
+    alert('not hookedup');
+  }
+
+  /**
    * Protected method to delete all documents. Must be confirmed by the user.
    */
   protected deleteAllDocs() {
@@ -50,7 +59,7 @@ export class PreferencesComponent implements OnInit {
       this.offlineStorageService.deleteAll().then((result) => {
         console.log("deleteAllDoc result", result);
       }).catch((error: any) => {
-        console.error("biojwefoijA", error);
+        console.error(error);
         this.errorMessage.emit(error);
       });
     }

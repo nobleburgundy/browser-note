@@ -32,6 +32,10 @@ code {
   color: #e01a76;
 }
 
+.text-monospace {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 /* .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

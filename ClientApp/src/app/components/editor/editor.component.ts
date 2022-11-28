@@ -9,7 +9,7 @@ import { BrowserNote, OfflineStorageService } from 'src/app/services/offline-sto
 export class EditorComponent implements OnInit {
   codeMirrorOptions: any = {
     mode: "text",
-    indentWithTabs: true,
+    indentWithTabs: false,
     smartIndent: true,
     lineNumbers: false,
     lineWrapping: false,
