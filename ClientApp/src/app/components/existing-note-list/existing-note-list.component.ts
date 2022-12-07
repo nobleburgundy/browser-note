@@ -26,17 +26,18 @@ export class ExistingNoteListComponent implements OnInit {
  * @param note The note to delete.
  */
   deleteNote(note: BrowserNote) {
-    this.offlineStorageService.deleteById(note._id).then((result: any) => {
-      console.log("deleteNote result", result);
-      this.offlineStorageService.getAll().then((result: any) => {
-        // update local cache of notes.
-        this.notes = result.rows.map((rowDocs: { doc: BrowserNote; }) => rowDocs.doc);
-        return result.rows.map((rowDocs: { doc: BrowserNote; }) => rowDocs.doc);
+    if (confirm('Are you sure you want to delete this note?')) {
+      this.offlineStorageService.deleteById(note._id).then((result: any) => {
+        console.log("deleteNote result", result);
+        this.offlineStorageService.getAll().then((result: any) => {
+          // update local cache of notes.
+          this.notes = result.rows.map((rowDocs: { doc: BrowserNote; }) => rowDocs.doc).sort((a: BrowserNote, b: BrowserNote) => b.createdDate.getTime() - a.createdDate.getTime());;
+        });
+      }).catch((error: any) => {
+        console.error(error);
+        this.errorMessage.emit(error);
       });
-    }).catch((error: any) => {
-      console.error(error);
-      this.errorMessage.emit(error);
-    });
+    }
   }
 
   /**
