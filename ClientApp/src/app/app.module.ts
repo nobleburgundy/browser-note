@@ -14,6 +14,7 @@ import { EditorComponent } from './components/editor/editor.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { ThemeSelectorComponent } from './components/theme-selector/theme-selector.component';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
+import { ExistingNoteListComponent } from './components/existing-note-list/existing-note-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ErrorBannerComponent } from './components/error-banner/error-banner.com
     EditorComponent,
     LanguageSelectorComponent,
     ThemeSelectorComponent,
-    ErrorBannerComponent
+    ErrorBannerComponent,
+    ExistingNoteListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -46,7 +46,8 @@
     </div>
     <!-- Existing Notes -->
     <div class="mt-5">
-        <button class="btn btn-sm btn-outline-danger float-end" (click)="deleteAllDocs()">Delete All Notes</button>
+        <app-existing-note-list [notes]="notes"></app-existing-note-list>
+        <!-- <button class="btn btn-sm btn-outline-danger float-end" (click)="deleteAllDocs()">Delete All Notes</button>
         <h3 class="floast-start">Existing Notes</h3>
         <ul class="list-group">
             <li class="list-group-item" *ngFor="let note of notes">
@@ -66,8 +67,8 @@
             </li>
             <hr>
         </ul>
+    </div> -->
     </div>
-</div>
-<footer class="bg-info font-monospace fixed-bottom">
-    <p class="p-2 mb-0"><small>{{version}}</small></p>
-</footer>
+    <footer class="bg-info font-monospace fixed-bottom">
+        <p class="p-2 mb-0"><small>{{version}}</small></p>
+    </footer>

@@ -1,36 +1,30 @@
-import { Component, EventEmitter, OnInit, Output, VERSION } from '@angular/core';
-import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
-import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { BrowserNote, OfflineStorageService } from 'src/app/services/offline-storage-service.service';
 
 @Component({
-  selector: 'app-preferences',
-  templateUrl: './preferences.component.html',
-  styleUrls: ['./preferences.component.css']
+  selector: 'app-existing-note-list',
+  templateUrl: './existing-note-list.component.html',
+  styleUrls: ['./existing-note-list.component.css']
 })
-export class PreferencesComponent implements OnInit {
-  version = 'Angular ' + VERSION.major;
-  languages = ['Markdown', 'TypeScript', 'C#', 'JavaScript', 'Java', 'Text'];
-  notes: Array<BrowserNote> = [];
+export class ExistingNoteListComponent implements OnInit {
   faTrash = faTrash;
   faPencil = faPencil;
+
+  @Input()
+  notes: Array<BrowserNote> = [];
 
   @Output()
   errorMessage = new EventEmitter<string>();
 
   constructor(private offlineStorageService: OfflineStorageService) { }
 
-  ngOnInit(): void {
-    this.offlineStorageService.getAll().then((result: any) => {
-      this.notes = result.rows.map((e: { doc: any; }) => e.doc);
-      // sort by createdDate desc
-      this.notes.sort((a: BrowserNote, b: BrowserNote) => b.createdDate.getTime() - a.createdDate.getTime());
-    });
-  }
+  ngOnInit(): void { }
 
   /**
-   * Deletes the given note and updates the local cache, which refreshes the page.
-   * @param note The note to delete.
-   */
+ * Deletes the given note and updates the local cache, which refreshes the page.
+ * @param note The note to delete.
+ */
   deleteNote(note: BrowserNote) {
     this.offlineStorageService.deleteById(note._id).then((result: any) => {
       console.log("deleteNote result", result);
@@ -46,8 +40,16 @@ export class PreferencesComponent implements OnInit {
   }
 
   /**
-   * Protected method to delete all documents. Must be confirmed by the user.
-   */
+* Edits the given note and updates the local cache, which refreshes the page.
+* @param note The note to edit.
+*/
+  editNote(note: BrowserNote) {
+    alert('not hookedup');
+  }
+
+  /**
+ * Protected method to delete all documents. Must be confirmed by the user.
+ */
   protected deleteAllDocs() {
     if (prompt("Are you sure you want to delete ALL notes? This action cannot be reversed. Type 'Yes' if you want to delete all notes.") === 'Yes') {
       this.offlineStorageService.deleteAll().then((result) => {
@@ -58,4 +60,5 @@ export class PreferencesComponent implements OnInit {
       });
     }
   }
+
 }
