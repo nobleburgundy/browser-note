@@ -1,4 +1,6 @@
-<button class="btn btn-sm btn-outline-info m-1" (click)="saveNote()">Save Note</button>
-<ngx-codemirror #codemirror [options]="codeMirrorOptions" [(ngModel)]="data" [autoFocus]="true"
+<!-- <ngx-codemirror #codemirror [options]="codeMirrorOptions" [(ngModel)]="data" [autoFocus]="true"
     (ngModelChange)="setEditorContent($event)">
-</ngx-codemirror>
+</ngx-codemirror> -->
+<textarea class="text_editor no_highlights" autofocus="autofocus" [(ngModel)]="data" (ngModelChange)="setEditorContent($event)"></textarea>
+
+<button class="btn btn-sm btn-outline-info m-1" (click)="saveNote()">Save Note</button>

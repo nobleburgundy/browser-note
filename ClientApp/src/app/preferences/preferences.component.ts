@@ -1,11 +1,20 @@
-import { Component, EventEmitter, OnInit, Output, VERSION } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  VERSION,
+} from '@angular/core';
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
-import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
+import {
+  BrowserNote,
+  OfflineStorageService,
+} from '../services/offline-storage-service.service';
 
 @Component({
   selector: 'app-preferences',
   templateUrl: './preferences.component.html',
-  styleUrls: ['./preferences.component.css']
+  styleUrls: ['./preferences.component.css'],
 })
 export class PreferencesComponent implements OnInit {
   version = 'Angular ' + VERSION.major;
@@ -17,13 +26,13 @@ export class PreferencesComponent implements OnInit {
   @Output()
   errorMessage = new EventEmitter<string>();
 
-  constructor(private offlineStorageService: OfflineStorageService) { }
+  constructor(private offlineStorageService: OfflineStorageService) {}
 
   ngOnInit(): void {
     this.offlineStorageService.getAll().then((result: any) => {
-      this.notes = result.rows.map((e: { doc: any; }) => e.doc);
+      this.notes = result.rows.map((e: { doc: any }) => e.doc);
       // sort by createdDate desc
-      this.notes.sort((a: BrowserNote, b: BrowserNote) => b.createdDate.getTime() - a.createdDate.getTime());
+      // this.notes.sort((a: BrowserNote, b: BrowserNote) => b.createdDate.getTime() - a.createdDate.getTime());
     });
   }
 
@@ -32,30 +41,44 @@ export class PreferencesComponent implements OnInit {
    * @param note The note to delete.
    */
   deleteNote(note: BrowserNote) {
-    this.offlineStorageService.deleteById(note._id).then((result: any) => {
-      console.log("deleteNote result", result);
-      this.offlineStorageService.getAll().then((result: any) => {
-        // update local cache of notes.
-        this.notes = result.rows.map((rowDocs: { doc: BrowserNote; }) => rowDocs.doc);
-        return result.rows.map((rowDocs: { doc: BrowserNote; }) => rowDocs.doc);
+    this.offlineStorageService
+      .deleteById(note._id)
+      .then((result: any) => {
+        console.log('deleteNote result', result);
+        this.offlineStorageService.getAll().then((result: any) => {
+          // update local cache of notes.
+          this.notes = result.rows.map(
+            (rowDocs: { doc: BrowserNote }) => rowDocs.doc
+          );
+          return result.rows.map(
+            (rowDocs: { doc: BrowserNote }) => rowDocs.doc
+          );
+        });
+      })
+      .catch((error: any) => {
+        console.error(error);
+        this.errorMessage.emit(error);
       });
-    }).catch((error: any) => {
-      console.error(error);
-      this.errorMessage.emit(error);
-    });
   }
 
   /**
    * Protected method to delete all documents. Must be confirmed by the user.
    */
   protected deleteAllDocs() {
-    if (prompt("Are you sure you want to delete ALL notes? This action cannot be reversed. Type 'Yes' if you want to delete all notes.") === 'Yes') {
-      this.offlineStorageService.deleteAll().then((result) => {
-        console.log("deleteAllDoc result", result);
-      }).catch((error: any) => {
-        console.error(error);
-        this.errorMessage.emit(error);
-      });
+    if (
+      prompt(
+        "Are you sure you want to delete ALL notes? This action cannot be reversed. Type 'Yes' if you want to delete all notes."
+      ) === 'Yes'
+    ) {
+      this.offlineStorageService
+        .deleteAll()
+        .then((result) => {
+          console.log('deleteAllDoc result', result);
+        })
+        .catch((error: any) => {
+          console.error(error);
+          this.errorMessage.emit(error);
+        });
     }
   }
 }
