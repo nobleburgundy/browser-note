@@ -26,15 +26,9 @@ export class ExistingNoteListComponent implements OnInit {
         console.log('result', result);
 
         if (result.rows.length > 0) {
-          this.notes = result.rows
-            .map((rowDocs: { doc: BrowserNote }) => rowDocs.doc)
-            .sort((a: BrowserNote, b: BrowserNote) => {
-              console.log(a);
-              return (
-                new Date(b.createdDate).getTime() -
-                new Date(a.createdDate).getTime()
-              );
-            });
+          this.notes = result.rows.map(
+            (rowDocs: { doc: BrowserNote }) => rowDocs.doc
+          );
         }
       });
     }
@@ -58,8 +52,8 @@ export class ExistingNoteListComponent implements OnInit {
               .map((rowDocs: { doc: BrowserNote }) => rowDocs.doc)
               .sort(
                 (a: BrowserNote, b: BrowserNote) =>
-                  new Date(b.createdDate).getTime() -
-                  new Date(a.createdDate).getTime()
+                  new Date(a.createdDate).getTime() -
+                  new Date(b.createdDate).getTime()
               );
           });
         })
