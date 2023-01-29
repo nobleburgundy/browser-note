@@ -1,7 +1,18 @@
+using BrowserNote.Data;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+var sqlConBuilder = new MySqlConnectionStringBuilder();
+sqlConBuilder.ConnectionString = builder.Configuration.GetConnectionString("MySqlDbConnection");
+// sqlConBuilder.UserID = builder.Configuration["uid"];
+// sqlConBuilder.Password = builder.Configuration["Password"];
+
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(sqlConBuilder.ConnectionString, ServerVersion.AutoDetect(sqlConBuilder.ConnectionString)));
 
 var app = builder.Build();
 
