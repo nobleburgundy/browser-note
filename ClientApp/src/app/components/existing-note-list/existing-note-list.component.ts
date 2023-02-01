@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { BrowserNote } from 'src/app/models/browser-note';
 import { BrowserNoteService } from 'src/app/services/browser-note.service';
-import { BrowserNote } from 'src/app/services/offline-storage-service.service';
 
 @Component({
   selector: 'app-existing-note-list',
@@ -36,33 +36,21 @@ export class ExistingNoteListComponent implements OnInit {
     console.log('not implemented', note ? note.id : '');
   }
 
-  // /**
-  //  * Deletes the given note and updates the local cache, which refreshes the page.
-  //  * @param note The note to delete.
-  //  */
-  // deleteNote(note: BrowserNote) {
-  //   if (confirm('Are you sure you want to delete this note?')) {
-  //     this.noteRestService
-  //       .deleteById(note._id)
-  //       .then((result: any) => {
-  //         console.log('deleteNote result', result);
-  //         this.restService.getAll().then((result: any) => {
-  //           // update local cache of notes.
-  //           this.notes = result.rows
-  //             .map((rowDocs: { doc: BrowserNote }) => rowDocs.doc)
-  //             .sort(
-  //               (a: BrowserNote, b: BrowserNote) =>
-  //                 new Date(a.createdDate).getTime() -
-  //                 new Date(b.createdDate).getTime()
-  //             );
-  //         });
-  //       })
-  //       .catch((error: any) => {
-  //         console.error(error);
-  //         this.errorMessage.emit(error);
-  //       });
-  //   }
-  // }
+  /**
+   * Deletes the given note and updates the local cache, which refreshes the page.
+   * @param note The note to delete.
+   */
+  deleteNote(note: BrowserNote) {
+    if (confirm('Are you sure you want to delete this note?')) {
+      this.noteRestService.deleteNote(note).subscribe((result: any) => {
+        console.log('deleteNote result', result);
+        this.noteRestService.getNotes().subscribe((result: any) => {
+          // update local cache of notes.
+          this.notes = result.map((row: { note: BrowserNote }) => row).sort();
+        });
+      });
+    }
+  }
 
   // /**
   //  * Edits the given note and updates the local cache, which refreshes the page.

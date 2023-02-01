@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BrowserNote } from 'src/app/models/browser-note';
 import { BrowserNoteService } from 'src/app/services/browser-note.service';
-import {
-  BrowserNote,
-  OfflineStorageService,
-} from 'src/app/services/offline-storage-service.service';
 
 @Component({
   selector: 'app-editor',
@@ -64,7 +61,10 @@ export class EditorComponent implements OnInit {
    * @returns
    */
   saveNote(): Promise<string> | void {
-    console.log('saveNote called');
+    console.log('saveNote called', this.content);
+    this.noteRestService.saveNote(this.content).subscribe((result) => {
+      console.log('save note post result: ', result);
+    });
 
     // return this.offlineStorageService.put(this.content).then((result: any) => {
     //   console.log("successful note save");

@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BrowserNote } from '../models/browser-note';
 
 @Injectable({
   providedIn: 'root',
@@ -11,5 +12,15 @@ export class BrowserNoteService {
 
   getNotes() {
     return this.http.get(this.notesApiUrl);
+  }
+
+  saveNote(note: BrowserNote) {
+    return this.http.post<BrowserNote>(this.notesApiUrl, note, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    });
+  }
+
+  deleteNote(note: BrowserNote) {
+    return this.http.delete(`${this.notesApiUrl}/${note.id}`);
   }
 }

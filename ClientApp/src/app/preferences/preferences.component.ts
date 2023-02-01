@@ -6,11 +6,8 @@ import {
   VERSION,
 } from '@angular/core';
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { BrowserNote } from '../models/browser-note';
 import { BrowserNoteService } from '../services/browser-note.service';
-import {
-  BrowserNote,
-  OfflineStorageService,
-} from '../services/offline-storage-service.service';
 
 @Component({
   selector: 'app-preferences',

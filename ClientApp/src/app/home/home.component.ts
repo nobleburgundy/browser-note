@@ -3,11 +3,8 @@ import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 import * as CodeMirror from 'codemirror';
 import { EditorComponent } from '../components/editor/editor.component';
+import { BrowserNote } from '../models/browser-note';
 import { BrowserNoteService } from '../services/browser-note.service';
-import {
-  BrowserNote,
-  OfflineStorageService,
-} from '../services/offline-storage-service.service';
 
 @Component({
   selector: 'app-home',
