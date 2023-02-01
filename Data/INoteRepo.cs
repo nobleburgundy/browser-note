@@ -6,7 +6,6 @@ namespace BrowserNote.Data
     {
         Task SaveChanges();
         Task<Note?> GetNoteById(int id);
-
         Task<IEnumerable<Note>> GetNotesByUserId(int userId);
         Task<IEnumerable<Note>> GetAllNotes();
         Task CreateNote(Note note);

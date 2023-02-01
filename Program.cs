@@ -36,7 +36,7 @@ app.UseHttpsRedirection();
 
 app.MapGet("api/v1/notes", async (INoteRepo repo, IMapper mapper) =>
 {
-    Console.WriteLine("NOTES API HIT");
+    Console.WriteLine("NOTES API HIT\nConStr: " + sqlConBuilder.ConnectionString);
     var notes = await repo.GetAllNotes();
     Console.WriteLine("Note Count: " + notes.Count());
     return Results.Ok(mapper.Map<IEnumerable<NoteReadDto>>(notes));

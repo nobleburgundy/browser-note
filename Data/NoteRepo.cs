@@ -34,6 +34,7 @@ namespace BrowserNote.Data
 
         public async Task<IEnumerable<Note>> GetAllNotes()
         {
+            Console.WriteLine("context: " + _context.Database.GetConnectionString());
             return await _context.Notes.ToListAsync();
         }
 
