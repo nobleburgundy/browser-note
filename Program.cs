@@ -1,18 +1,27 @@
+using AutoMapper;
 using BrowserNote.Data;
+using BrowserNote.Dtos;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddEndpointsApiExplorer();
+
 // Add services to the container.
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
-var sqlConBuilder = new MySqlConnectionStringBuilder();
-sqlConBuilder.ConnectionString = builder.Configuration.GetConnectionString("MySqlDbConnection");
-// sqlConBuilder.UserID = builder.Configuration["uid"];
-// sqlConBuilder.Password = builder.Configuration["Password"];
+var sqlConBuilder = new SqlConnectionStringBuilder();
 
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(sqlConBuilder.ConnectionString, ServerVersion.AutoDetect(sqlConBuilder.ConnectionString)));
+sqlConBuilder.ConnectionString = builder.Configuration.GetConnectionString("SQLDBConnection");
+sqlConBuilder.UserID = builder.Configuration["UserId"];
+sqlConBuilder.Password = builder.Configuration["Password"];
+
+
+// builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(sqlConBuilder.ConnectionString, ServerVersion.AutoDetect(sqlConBuilder.ConnectionString)));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(sqlConBuilder.ConnectionString));
+builder.Services.AddScoped<INoteRepo, NoteRepo>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -24,14 +33,24 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
+
+app.MapGet("api/v1/notes", async (INoteRepo repo, IMapper mapper) =>
+{
+    Console.WriteLine("NOTES API HIT");
+    var notes = await repo.GetAllNotes();
+    Console.WriteLine("Note Count: " + notes.Count());
+    return Results.Ok(mapper.Map<IEnumerable<NoteReadDto>>(notes));
+});
 
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+// app.UseStaticFiles();
+// app.UseRouting();
 
-app.MapFallbackToFile("index.html"); ;
+
+// app.MapControllerRoute(
+//     name: "default",
+//     pattern: "{controller}/{action=Index}/{id?}");
+
+// app.MapFallbackToFile("index.html"); ;
 
 app.Run();
