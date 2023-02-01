@@ -11,7 +11,7 @@ export class BrowserNoteService {
   notesApiUrl = 'https://localhost:7140/api/v1/notes';
 
   getNotes() {
-    return this.http.get(this.notesApiUrl);
+    return this.http.get<Array<BrowserNote>>(this.notesApiUrl);
   }
 
   saveNote(note: BrowserNote) {

@@ -61,18 +61,9 @@ export class EditorComponent implements OnInit {
    * @returns
    */
   saveNote(): Promise<string> | void {
-    console.log('saveNote called', this.content);
     this.noteRestService.saveNote(this.content).subscribe((result) => {
       console.log('save note post result: ', result);
     });
-
-    // return this.offlineStorageService.put(this.content).then((result: any) => {
-    //   console.log("successful note save");
-
-    //   return result;
-    // }).catch((error: any) => {
-    //   console.error(error);
-    // });
   }
 
   debounceNOTWORKING = (fn: Function, ms = 300) => {
