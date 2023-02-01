@@ -10,6 +10,11 @@ namespace BrowserNote.Dtos
         [Required]
         public string? Title { get; set; }
 
+        [Required]
         public int? UserId { get; set; }
+
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
+
+        public DateTime? UpdatedDate { get; set; }
     }
 }

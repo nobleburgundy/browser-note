@@ -1,6 +1,7 @@
 using AutoMapper;
 using BrowserNote.Data;
 using BrowserNote.Dtos;
+using BrowserNote.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,23 +35,67 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("api/v1/notes", async (INoteRepo repo, IMapper mapper) =>
+var notesAPI = "api/v1/notes";
+
+app.MapGet(notesAPI, async (INoteRepo repo, IMapper mapper) =>
 {
-    Console.WriteLine("NOTES API HIT\nConStr: " + sqlConBuilder.ConnectionString);
     var notes = await repo.GetAllNotes();
-    Console.WriteLine("Note Count: " + notes.Count());
     return Results.Ok(mapper.Map<IEnumerable<NoteReadDto>>(notes));
 });
 
+app.MapGet("api/v1/notes/{id}", async (INoteRepo repo, IMapper mapper, int id) =>
+{
+    var note = await repo.GetNoteById(id);
+    if (note != null)
+    {
+        return Results.Ok(mapper.Map<NoteReadDto>(note));
+    }
 
-// app.UseStaticFiles();
-// app.UseRouting();
+    return Results.NotFound();
+});
+
+app.MapPost("api/v1/notes", async (INoteRepo repo, IMapper mapper, NoteCreateDto noteCreateDto) =>
+{
+    var noteModel = mapper.Map<Note>(noteCreateDto);
+    if (noteModel.UserId == null)
+    {
+        return Results.BadRequest("User Id not specified");
+    }
+
+    await repo.CreateNote(noteModel);
+    await repo.SaveChanges();
+
+    var noteReadDto = mapper.Map<NoteReadDto>(noteModel);
+    return Results.Created($"api/vi/notes/{noteReadDto.Id}", noteReadDto);
+});
+
+app.MapPut("api/v1/notes/{id}", async (INoteRepo repo, IMapper mapper, int id, NoteUpdateDto noteUpdateDto) =>
+{
+    var note = await repo.GetNoteById(id);
+    if (note == null)
+    {
+        return Results.NotFound();
+    }
+
+    mapper.Map(noteUpdateDto, note);
+    await repo.SaveChanges();
+
+    return Results.NoContent();
+});
 
 
-// app.MapControllerRoute(
-//     name: "default",
-//     pattern: "{controller}/{action=Index}/{id?}");
+app.MapDelete("api/v1/notes/{id}", async (INoteRepo repo, IMapper mapper, int id) =>
+{
+    var note = await repo.GetNoteById(id);
+    if (note == null)
+    {
+        return Results.NotFound();
+    }
 
-// app.MapFallbackToFile("index.html"); ;
+    repo.DeleteNote(note);
+    await repo.SaveChanges();
+
+    return Results.NoContent();
+});
 
 app.Run();
