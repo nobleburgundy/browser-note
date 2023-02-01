@@ -1,24 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BrowserNote, OfflineStorageService } from 'src/app/services/offline-storage-service.service';
+import { BrowserNoteService } from 'src/app/services/browser-note.service';
+import {
+  BrowserNote,
+  OfflineStorageService,
+} from 'src/app/services/offline-storage-service.service';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.css']
+  styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit {
   codeMirrorOptions: any = {
-    mode: "text",
+    mode: 'text',
     indentWithTabs: false,
     smartIndent: true,
     lineNumbers: false,
     lineWrapping: false,
-    extraKeys: { "Ctrl-Space": "autocomplete" },
-    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    extraKeys: { 'Ctrl-Space': 'autocomplete' },
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
     autoCloseBrackets: true,
     matchBrackets: true,
     lint: true,
-    autoFocus: true
+    autoFocus: true,
   };
 
   @Input()
@@ -27,17 +31,17 @@ export class EditorComponent implements OnInit {
   cursor!: {};
 
   /**
-   * 
-   * @param offlineStorageService The depenency injected to service for handling offline storage.
+   *
+   * @param noteRestService The depenency injected to service for handling offline storage.
    */
-  constructor(private offlineStorageService: OfflineStorageService) { }
+  constructor(private noteRestService: BrowserNoteService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   /**
    * Method responsibile for updating the content of the editor.
-   * 
-   * @param updatedContent 
+   *
+   * @param updatedContent
    */
   setEditorContent(updatedContent: string) {
     if (!this.content) {
@@ -49,7 +53,7 @@ export class EditorComponent implements OnInit {
   /**
    * Set's the cursor position
    * @param line The line number to set the cursor position.
-   * @param pos The character position to set the cursor. 
+   * @param pos The character position to set the cursor.
    */
   setCursor(line: number, pos: number) {
     this.cursor = { line, pos };
@@ -57,18 +61,18 @@ export class EditorComponent implements OnInit {
 
   /**
    * Saves the current note in the editor using the offline storage service.
-   * @returns 
+   * @returns
    */
-  saveNote(): Promise<string> {
-    console.log("saveNote called");
+  saveNote(): Promise<string> | void {
+    console.log('saveNote called');
 
-    return this.offlineStorageService.put(this.content).then((result: any) => {
-      console.log("successful note save");
+    // return this.offlineStorageService.put(this.content).then((result: any) => {
+    //   console.log("successful note save");
 
-      return result;
-    }).catch((error: any) => {
-      console.error(error);
-    });
+    //   return result;
+    // }).catch((error: any) => {
+    //   console.error(error);
+    // });
   }
 
   debounceNOTWORKING = (fn: Function, ms = 300) => {

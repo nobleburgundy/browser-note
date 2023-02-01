@@ -8,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
+var CORSOpenPolicy = "OpenCORSPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: CORSOpenPolicy, build => { build.WithOrigins("*").AllowAnyHeader().AllowAnyMethod(); });
+});
 
 // Add services to the container.
 // builder.Services.AddControllers();
@@ -26,6 +31,7 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+app.UseCors(CORSOpenPolicy);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -36,7 +42,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// NOTES API 
+
+// NOTES API
 app.MapGet("api/v1/notes", async (INoteRepo repo, IMapper mapper) =>
 {
     var notes = await repo.GetAllNotes();

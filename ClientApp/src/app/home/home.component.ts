@@ -3,7 +3,11 @@ import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 import * as CodeMirror from 'codemirror';
 import { EditorComponent } from '../components/editor/editor.component';
-import { BrowserNote, OfflineStorageService } from '../services/offline-storage-service.service';
+import { BrowserNoteService } from '../services/browser-note.service';
+import {
+  BrowserNote,
+  OfflineStorageService,
+} from '../services/offline-storage-service.service';
 
 @Component({
   selector: 'app-home',
@@ -14,56 +18,54 @@ export class HomeComponent {
 
   @ViewChild(EditorComponent, { static: false })
   editor!: EditorComponent;
-  data = "";
+  data = '';
 
-  constructor(private offlineStorageService: OfflineStorageService) { }
+  constructor(private noteRestService: BrowserNoteService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   editorUpdate() {
-    console.log("editorUpdateCalled", this.editor.content);
+    console.log('editorUpdateCalled', this.editor.content);
   }
 
   getAllDocs() {
-    console.log("getDoc() called");
+    console.log('getDoc() called');
 
-
-    this.offlineStorageService.getAll().then((result) => {
-      console.log("getAllDoc result", result as [BrowserNote]);
+    this.noteRestService.getNotes().subscribe((result) => {
+      console.log('getAllDoc result', result as [BrowserNote]);
     });
   }
 
-  getDoc(note: BrowserNote) {
-    console.log("getDoc() called");
+  // getDoc(note: BrowserNote) {
+  //   console.log('getDoc() called');
 
-    this.offlineStorageService.getById(note._id).then((result) => {
-      this.data = result.text;
-      console.log("getDoc result", result);
-    });
-  }
+  //   this.noteRestService.getById(note._id).then((result) => {
+  //     this.data = result.text;
+  //     console.log('getDoc result', result);
+  //   });
+  // }
 
-  saveDoc() {
-    console.log("saveDoc() called");
+  // saveDoc() {
+  //   console.log('saveDoc() called');
 
-    this.offlineStorageService.put(this.data).then((result) => {
-      console.log("saveDoc result", result);
-    });
-  }
+  //   this.noteRestService.put(this.data).then((result) => {
+  //     console.log('saveDoc result', result);
+  //   });
+  // }
 
-  deleteDoc() {
-    console.log("deleteDoc() called");
+  // deleteDoc() {
+  //   console.log('deleteDoc() called');
 
-    this.offlineStorageService.deleteById(this.data).then((result) => {
-      console.log("deleteDoc result", result);
-    });
-  }
+  //   this.noteRestService.deleteById(this.data).then((result) => {
+  //     console.log('deleteDoc result', result);
+  //   });
+  // }
 
-  deleteAllDocs() {
-    console.log("deleteAllDoc() called");
+  // deleteAllDocs() {
+  //   console.log('deleteAllDoc() called');
 
-    this.offlineStorageService.deleteAll().then((result) => {
-      console.log("deleteAllDoc result", result);
-    });
-  }
+  //   this.noteRestService.deleteAll().then((result) => {
+  //     console.log('deleteAllDoc result', result);
+  //   });
+  // }
 }
