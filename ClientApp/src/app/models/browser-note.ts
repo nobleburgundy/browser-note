@@ -1,5 +1,3 @@
-import { randomInt } from 'crypto';
-
 export class BrowserNote {
   id?: any;
   title: string = '';
@@ -20,6 +18,7 @@ export class BrowserNote {
     note.title = title ?? new Date().toDateString();
     note.text = text;
     note.createdDate = new Date();
+    note.updatedDate = new Date();
     note.userId = 3;
 
     return note;

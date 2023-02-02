@@ -8,24 +8,27 @@ import { BrowserNoteService } from 'src/app/services/browser-note.service';
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit {
-  codeMirrorOptions: any = {
-    mode: 'text',
-    indentWithTabs: false,
-    smartIndent: true,
-    lineNumbers: false,
-    lineWrapping: false,
-    extraKeys: { 'Ctrl-Space': 'autocomplete' },
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    lint: true,
-    autoFocus: true,
-  };
+  // codeMirrorOptions: any = {
+  //   mode: 'text',
+  //   indentWithTabs: false,
+  //   smartIndent: true,
+  //   lineNumbers: false,
+  //   lineWrapping: false,
+  //   extraKeys: { 'Ctrl-Space': 'autocomplete' },
+  //   gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+  //   autoCloseBrackets: true,
+  //   matchBrackets: true,
+  //   lint: true,
+  //   autoFocus: true,
+  // };
 
   @Input()
   data!: string;
   content!: BrowserNote;
   cursor!: {};
+  existingNoteArray: Array<BrowserNote> = [];
+
+  private autoSave = false;
 
   /**
    *
@@ -33,7 +36,33 @@ export class EditorComponent implements OnInit {
    */
   constructor(private noteRestService: BrowserNoteService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // get the existing notes, then load the latest into the editor
+    this.noteRestService.getNotes().subscribe((result) => {
+      this.existingNoteArray = result;
+      console.log(result[result.length - 1].text);
+
+      this.setEditorContent(result[result.length - 1].text);
+    });
+
+    // auto save testing code
+    let tC = 0;
+    let content = new BrowserNote();
+    content.text = '';
+    if (this.autoSave) {
+      setInterval(() => {
+        if (this.content == undefined || content?.text === this.content?.text) {
+          console.log('no changes', tC);
+        } else {
+          console.log('test count', tC);
+          console.log('len', this.content?.text.length);
+          this.noteRestService.saveNote(this.content);
+        }
+        tC++;
+        content = this.content;
+      }, 10000);
+    }
+  }
 
   /**
    * Method responsibile for updating the content of the editor.
@@ -45,6 +74,7 @@ export class EditorComponent implements OnInit {
       this.content = BrowserNote.createFromText(updatedContent);
     }
     this.content.text = updatedContent;
+    this.data = updatedContent;
   }
 
   /**
@@ -61,9 +91,18 @@ export class EditorComponent implements OnInit {
    * @returns
    */
   saveNote(): Promise<string> | void {
-    this.noteRestService.saveNote(this.content).subscribe((result) => {
-      console.log('save note post result: ', result);
-    });
+    if (this.existingNoteArray.map((e) => e.id).includes(this.content.id)) {
+      console.log('pre update', this.content);
+
+      this.noteRestService.updateNote(this.content).subscribe((result) => {
+        console.log('update note successful:', result);
+      });
+    } else {
+      this.noteRestService.saveNote(this.content).subscribe((result) => {
+        this.content = result;
+        this.existingNoteArray.push(this.content);
+      });
+    }
   }
 
   debounceNOTWORKING = (fn: Function, ms = 300) => {

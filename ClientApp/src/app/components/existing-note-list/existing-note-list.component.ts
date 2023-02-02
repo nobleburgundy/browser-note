@@ -41,15 +41,13 @@ export class ExistingNoteListComponent implements OnInit {
    * @param note The note to delete.
    */
   deleteNote(note: BrowserNote) {
-    if (confirm('Are you sure you want to delete this note?')) {
-      this.noteRestService.deleteNote(note).subscribe((result: any) => {
-        console.log('deleteNote result', result);
-        this.noteRestService.getNotes().subscribe((result: any) => {
-          // update local cache of notes.
-          this.notes = result.map((row: { note: BrowserNote }) => row).sort();
-        });
+    this.noteRestService.deleteNote(note).subscribe((result: any) => {
+      console.log('deleteNote result', result);
+      this.noteRestService.getNotes().subscribe((result: any) => {
+        // update local cache of notes.
+        this.notes = result.map((row: { note: BrowserNote }) => row).sort();
       });
-    }
+    });
   }
 
   // /**
