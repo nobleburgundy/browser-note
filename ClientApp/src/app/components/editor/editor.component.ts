@@ -52,6 +52,7 @@ export class EditorComponent implements OnInit {
     this.noteRestService.getNotes().subscribe((result) => {
       this.existingNoteArray = result;
       const currentNote = result.find((note) => note.id == this.id);
+      this.content = currentNote ?? new BrowserNote();
       this.setEditorContent(
         currentNote?.text ?? `Warning: Note with id '${this.id}' not found`
       );
@@ -85,8 +86,9 @@ export class EditorComponent implements OnInit {
     if (!this.content) {
       this.content = BrowserNote.createFromText(updatedContent);
     }
-    this.content.text = updatedContent;
+    // TODO clean up use of ths.data and this.content
     this.data = updatedContent;
+    this.content.text = updatedContent;
   }
 
   /**
@@ -104,7 +106,7 @@ export class EditorComponent implements OnInit {
    */
   saveNote(): Promise<string> | void {
     if (this.existingNoteArray.map((e) => e.id).includes(this.content.id)) {
-      console.log('pre update', this.content);
+      console.log('pre update', this.content, 'id', this.content.id);
 
       this.noteRestService.updateNote(this.content).subscribe((result) => {
         console.log('update note successful:', result);
