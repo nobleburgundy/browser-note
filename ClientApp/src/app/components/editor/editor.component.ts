@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BrowserNote } from 'src/app/models/browser-note';
 import { BrowserNoteService } from 'src/app/services/browser-note.service';
 
@@ -29,14 +31,23 @@ export class EditorComponent implements OnInit {
   existingNoteArray: Array<BrowserNote> = [];
 
   private autoSave = false;
+  routeChangeSubscription = new Subscription();
 
   /**
    *
    * @param noteRestService The depenency injected to service for handling offline storage.
    */
-  constructor(private noteRestService: BrowserNoteService) {}
+  constructor(
+    private noteRestService: BrowserNoteService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    // subscribe to route change events
+    this.route.paramMap.subscribe((params) => {
+      console.log('params', params);
+    });
+
     // get the existing notes, then load the latest into the editor
     this.noteRestService.getNotes().subscribe((result) => {
       this.existingNoteArray = result;

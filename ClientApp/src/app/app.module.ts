@@ -15,6 +15,7 @@ import { LanguageSelectorComponent } from './components/language-selector/langua
 import { ThemeSelectorComponent } from './components/theme-selector/theme-selector.component';
 import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
 import { ExistingNoteListComponent } from './components/existing-note-list/existing-note-list.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ExistingNoteListComponent } from './components/existing-note-list/exist
     LanguageSelectorComponent,
     ThemeSelectorComponent,
     ErrorBannerComponent,
-    ExistingNoteListComponent
+    ExistingNoteListComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,11 +38,16 @@ import { ExistingNoteListComponent } from './components/existing-note-list/exist
     FontAwesomeModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'preferences', component: PreferencesComponent, pathMatch: 'full' }
-    ])
+      {
+        path: 'preferences',
+        component: PreferencesComponent,
+        pathMatch: 'full',
+      },
+      { path: '**', component: PageNotFoundComponent },
+    ]),
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

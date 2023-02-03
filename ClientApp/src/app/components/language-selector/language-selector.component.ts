@@ -1,21 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-language-selector',
   templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.css']
+  styleUrls: ['./language-selector.component.css'],
 })
 export class LanguageSelectorComponent implements OnInit {
-
   @Input()
-  languages: Array<string> = ['Markdown', 'TypeScript', 'C#', 'JavaScript', 'Java', 'Text'];
+  languages: Array<string> = [
+    'Text',
+    'Markdown',
+    'TypeScript',
+    'C#',
+    'JavaScript',
+    'Java',
+  ];
 
   @Input()
   dropdownLabel!: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
