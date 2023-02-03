@@ -37,7 +37,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     CodemirrorModule,
     FontAwesomeModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'note/:id',
+        component: HomeComponent,
+      },
       {
         path: 'preferences',
         component: PreferencesComponent,

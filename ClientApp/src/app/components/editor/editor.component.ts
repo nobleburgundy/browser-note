@@ -26,10 +26,12 @@ export class EditorComponent implements OnInit {
 
   @Input()
   data!: string;
+
   content!: BrowserNote;
   cursor!: {};
   existingNoteArray: Array<BrowserNote> = [];
 
+  private id!: number;
   private autoSave = false;
   routeChangeSubscription = new Subscription();
 
@@ -44,16 +46,15 @@ export class EditorComponent implements OnInit {
 
   ngOnInit(): void {
     // subscribe to route change events
-    this.route.paramMap.subscribe((params) => {
-      console.log('params', params);
-    });
+    this.route.params.subscribe((params) => (this.id = params['id']));
 
     // get the existing notes, then load the latest into the editor
     this.noteRestService.getNotes().subscribe((result) => {
       this.existingNoteArray = result;
-      console.log(result[result.length - 1].text);
-
-      this.setEditorContent(result[result.length - 1].text);
+      const currentNote = result.find((note) => note.id == this.id);
+      this.setEditorContent(
+        currentNote?.text ?? `Warning: Note with id '${this.id}' not found`
+      );
     });
 
     // auto save testing code

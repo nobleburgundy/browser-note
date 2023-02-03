@@ -1,5 +1,5 @@
 export class BrowserNote {
-  id?: any;
+  id?: number;
   title: string = '';
   text: string = '';
   userId?: number;
