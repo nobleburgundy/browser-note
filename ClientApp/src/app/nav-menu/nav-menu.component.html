@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="showHeader">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3">
     <div class="container-fluid">
       <a class="navbar-brand font-monospace" [routerLink]="['/']">browser notes</a>
@@ -21,3 +21,9 @@
     </div>
   </nav>
 </header>
+<!-- just show cog if no header -->
+<div *ngIf="!showHeader" class="cogOnly">
+  <a class="nav-link" [routerLink]="['/preferences']">
+    <fa-icon [icon]='facog'></fa-icon>
+  </a>
+</div>
