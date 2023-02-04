@@ -10,19 +10,19 @@ import { BrowserNoteService } from 'src/app/services/browser-note.service';
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit {
-  // codeMirrorOptions: any = {
-  //   mode: 'text',
-  //   indentWithTabs: false,
-  //   smartIndent: true,
-  //   lineNumbers: false,
-  //   lineWrapping: false,
-  //   extraKeys: { 'Ctrl-Space': 'autocomplete' },
-  //   gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-  //   autoCloseBrackets: true,
-  //   matchBrackets: true,
-  //   lint: true,
-  //   autoFocus: true,
-  // };
+  codeMirrorOptions: any = {
+    mode: 'text',
+    indentWithTabs: false,
+    smartIndent: true,
+    lineNumbers: false,
+    lineWrapping: false,
+    extraKeys: { 'Ctrl-Space': 'autocomplete' },
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true,
+    autoFocus: true,
+  };
 
   @Input()
   data!: string;
@@ -32,6 +32,7 @@ export class EditorComponent implements OnInit {
   existingNoteArray: Array<BrowserNote> = [];
 
   private id!: number;
+  private url!: string;
   private autoSave = false;
   routeChangeSubscription = new Subscription();
 
@@ -47,16 +48,19 @@ export class EditorComponent implements OnInit {
   ngOnInit(): void {
     // subscribe to route change events
     this.route.params.subscribe((params) => (this.id = params['id']));
+    console.log('note id', this.id);
 
-    // get the existing notes, then load the latest into the editor
-    this.noteRestService.getNotes().subscribe((result) => {
-      this.existingNoteArray = result;
-      const currentNote = result.find((note) => note.id == this.id);
-      this.content = currentNote ?? new BrowserNote();
-      this.setEditorContent(
-        currentNote?.text ?? `Warning: Note with id '${this.id}' not found`
-      );
-    });
+    // get the existing notes if in route, then load the latest into the editor
+    if (this.id) {
+      this.noteRestService.getNotes().subscribe((result) => {
+        this.existingNoteArray = result;
+        const currentNote = result.find((note) => note.id == this.id);
+        this.content = currentNote ?? new BrowserNote();
+        this.setEditorContent(
+          currentNote?.text ?? `Warning: Note with id '${this.id}' not found`
+        );
+      });
+    }
 
     // auto save testing code
     let tC = 0;
